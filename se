@@ -1,0 +1,22 @@
+#!/bin/bash
+
+for qattil in `cat *.list`
+do
+  if grep -q $qattil *.txt 
+  then
+  
+    ./ase $qattil *.txt |
+#       grep --color=always "$qattil\|$" |
+#       GREP_COLOR='01;32'      \
+#       grep --color=always "\[Vol.*\|$" |
+     aha | sed '1,3d'    \
+     > result/$qattil.htm
+
+     echo >> result/$qattil.htm
+     echo >> result/$qattil.htm
+     echo >> result/$qattil.htm
+
+  fi
+
+
+done

@@ -1,0 +1,79 @@
+#!/bin/bash
+
+qattil=$1
+file=$2
+
+
+awk -v qtyl=$qattil '
+
+# CODES FOR COLORS
+function includecolors()
+{
+  boldred="\033[1;31m"
+  boldgreen="\033[1;32m"
+  boldblue="\033[1;34m"
+  boldcyan="\033[1;36m"
+  undermagenta="\033[4;35m"
+  red="\033[2;31m"
+  green="\033[2;32m"
+  blue="\033[2;34m"
+  darkgray="\033[2;90m"
+
+  nocolor="\033[0m"
+ 
+}
+
+function colorize(pattern, color, target)
+{
+
+  newtarget=gensub(pattern, color"&"nocolor, "g", target)
+  return newtarget
+
+}
+
+
+
+
+ BEGIN{
+       FS="=+\n"
+       RS="%%%%%"
+       OFS=""
+       includecolors()
+      }
+
+{
+
+ for(i=1;i<=NF;i++) 
+ {
+  if ($i ~ qtyl)
+  {
+   a=$(i-1)
+   b=$(i)
+   c=$(i+1)
+   if(i==1)
+   {
+     a=""
+   }
+   if(i==NF)
+   {
+     c=""
+   }
+
+# COLORIZATION
+
+   a=colorize(qtyl,     red, a)
+   b=colorize(qtyl, boldred, b)
+   c=colorize(qtyl,     red, c)
+
+   a=colorize("Page [0-9]*",    green, a)
+   b=colorize("Page [0-9]*", boldblue, b)
+   c=colorize("Page [0-9]*",    green, c)
+
+
+
+   print a,b,c
+   print "\n\n\n"
+  }
+ }
+
+}' $file
